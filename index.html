@@ -510,27 +510,66 @@ start "" "C:\Program Files (x86)\Steam\steam.exe" ^
     }
   }
   loadC(); if (localStorage.getItem(LK) === 'true') { document.getElementById('likeBtn').classList.add('liked'); document.getElementById('likeIcon').textContent = '❤️'; }
-  document.querySelectorAll('.nav-card').forEach(c => { c.addEventListener('click', () => { const g = c.dataset.g; document.querySelectorAll('.nav-card').forEach(x => x.classList.remove('active')); document.querySelectorAll('.guide-content').forEach(x => x.classList.remove('active')); c.classList.add('active'); const target = document.getElementById('g-' + g); target.classList.add('active'); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }); });
+  // Smooth scroll like bestclient.fun — inertia-based lerp
+  let smoothTarget = window.scrollY;
+  let smoothCurrent = window.scrollY;
+  let isScrolling = false;
 
-  // Custom smooth scroll
-  function smoothScrollTo(targetY, duration) {
+  document.querySelectorAll('.nav-card').forEach(c => {
+    c.addEventListener('click', () => {
+      const g = c.dataset.g;
+      document.querySelectorAll('.nav-card').forEach(x => x.classList.remove('active'));
+      document.querySelectorAll('.guide-content').forEach(x => x.classList.remove('active'));
+      c.classList.add('active');
+      const target = document.getElementById('g-' + g);
+      target.classList.add('active');
+      smoothTarget = target.offsetTop - 60;
+    });
+  });
+
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+  function scrollToSmooth(toY, duration) {
     const startY = window.scrollY;
-    const diff = targetY - startY;
+    const diff = toY - startY;
     const startTime = performance.now();
-    function step(currentTime) {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      window.scrollTo(0, startY + diff * ease);
-      if (progress < 1) requestAnimationFrame(step);
+    function step(time) {
+      const p = Math.min((time - startTime) / duration, 1);
+      window.scrollTo(0, startY + diff * easeOutCubic(p));
+      if (p < 1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
   }
+
+  // Inertia wheel scroll
+  document.addEventListener('wheel', e => {
+    if (e.ctrlKey || e.deltaY === 0) return;
+    e.preventDefault();
+    smoothTarget += e.deltaY * 1.0;
+    smoothTarget = Math.max(0, Math.min(smoothTarget, document.documentElement.scrollHeight - window.innerHeight));
+    if (!isScrolling) {
+      isScrolling = true;
+      smoothCurrent = window.scrollY;
+      function loop() {
+        const diff = smoothTarget - smoothCurrent;
+        if (Math.abs(diff) > 0.5) {
+          smoothCurrent += diff * 0.12;
+          window.scrollTo(0, Math.round(smoothCurrent));
+          requestAnimationFrame(loop);
+        } else {
+          smoothCurrent = smoothTarget;
+          window.scrollTo(0, Math.round(smoothTarget));
+          isScrolling = false;
+        }
+      }
+      requestAnimationFrame(loop);
+    }
+  }, { passive: false });
+
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
       const el = document.querySelector(a.getAttribute('href'));
-      if (el) smoothScrollTo(el.offsetTop - 20, 800);
+      if (el) scrollToSmooth(el.offsetTop - 60, 700);
     });
   });
 </script>
