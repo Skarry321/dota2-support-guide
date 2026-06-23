@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Гайд для саппортов Dota 2 — Полное руководство</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a28;
+    --border: #2a2a3e;
+    --text: #e8e8f0;
+    --text-dim: #8888a8;
+    --accent: #ff6b35;
+    --accent2: #00d4aa;
+    --dota-red: #ff4444;
+    --dota-gold: #ffd700;
+    --dota-green: #00ff88;
+    --radius: 16px;
+    --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+  html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--accent) var(--surface); }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* Animated background */
+  .bg-grid {
+    position: fixed; inset: 0; z-index: -1;
+    background-image:
+      linear-gradient(rgba(255,107,53,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,107,53,.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .bg-glow {
+    position: fixed; inset: 0; z-index: -1;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255,107,53,.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 80%, rgba(0,212,170,.05) 0%, transparent 50%);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--surface); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+  /* Navigation */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 0 24px; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(10,10,15,.85); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transition: transform .3s;
+  }
+  .nav.hidden { transform: translateY(-100%); }
+  .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: .95rem; }
+  .nav-logo svg { width: 20px; height: 20px; }
+  .nav-links { display: flex; gap: 6px; list-style: none; overflow-x: auto; flex-wrap: nowrap; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-dim); font-size: .78rem; font-weight: 500;
+    padding: 6px 14px; border-radius: 8px; white-space: nowrap;
+    transition: all .2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--text); background: var(--surface2); }
+  .nav-burger { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 8px; }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 100px 24px 60px;
+    position: relative;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--surface2); border: 1px solid var(--border);
+    padding: 8px 20px; border-radius: 100px;
+    font-size: .82rem; color: var(--text-dim); margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 6vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #ff6b35, #ffd700, #00d4aa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+  }
+  .hero p {
+    font-size: 1.1rem; color: var(--text-dim);
+    max-width: 650px; margin: 0 auto 32px;
+  }
+  .hero-meta {
+    display: flex; gap: 32px; flex-wrap: wrap; justify-content: center;
+    font-size: .9rem; color: var(--text-dim);
+  }
+  .hero-meta span { display: flex; align-items: center; gap: 8px; }
+  .hero-meta strong { color: var(--text); font-weight: 600; }
+  .scroll-down {
+    position: absolute; bottom: 32px;
+    width: 36px; height: 60px; border-radius: 18px;
+    border: 2px solid var(--border);
+    display: flex; justify-content: center; padding-top: 12px;
+    animation: scrollBounce 2s ease-in-out infinite;
+  }
+  .scroll-down::after {
+    content: ''; width: 4px; height: 10px;
+    background: var(--accent); border-radius: 2px;
+  }
+  @keyframes scrollBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+
+  /* Container */
+  .container { max-width: 820px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* Section */
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px;
+    margin-bottom: 28px;
+    transition: transform .3s, box-shadow .3s;
+    opacity: 0; transform: translateY(30px);
+  }
+  .section.visible { opacity: 1; transform: translateY(0); }
+  .section:hover { border-color: rgba(255,107,53,.3); box-shadow: 0 8px 40px rgba(0,0,0,.3); }
+
+  .section-header {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 24px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon {
+    width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+  }
+  .icon-orange { background: rgba(255,107,53,.15); color: var(--accent); }
+  .icon-green { background: rgba(0,255,136,.12); color: var(--dota-green); }
+  .icon-gold { background: rgba(255,215,0,.12); color: var(--dota-gold); }
+  .icon-red { background: rgba(255,68,68,.12); color: var(--dota-red); }
+  .icon-teal { background: rgba(0,212,170,.12); color: var(--accent2); }
+
+  .section h2 { font-size: 1.25rem; font-weight: 700; }
+  .section h3 { font-size: 1.05rem; font-weight: 600; margin: 18px 0 10px; color: var(--accent); }
+  .section p { color: var(--text-dim); font-size: .95rem; margin-bottom: 12px; }
+  .section p:last-child { margin-bottom: 0; }
+  .section ul, .section ol { margin: 8px 0 14px 22px; color: var(--text-dim); font-size: .95rem; }
+  .section li { margin-bottom: 6px; }
+  .section li::marker { color: var(--accent); }
+  .section strong { color: var(--text); font-weight: 600; }
+  .section .highlight-box {
+    background: var(--surface2); border-radius: 10px; padding: 18px 22px;
+    margin: 14px 0; border: 1px solid var(--border);
+  }
+
+  /* Lane cards */
+  .lane-grid { display: grid; gap: 14px; margin: 14px 0; }
+  .lane-card {
+    background: var(--surface2); border-radius: 10px; padding: 18px 22px;
+    border: 1px solid var(--border);
+  }
+  .lane-card h4 { font-size: .95rem; font-weight: 700; margin-bottom: 6px; color: var(--accent); }
+
+  /* Ward table */
+  .ward-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: .9rem; }
+  .ward-table th, .ward-table td {
+    padding: 10px 14px; text-align: left;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .ward-table th { color: var(--text); font-weight: 600; background: var(--surface2); }
+
+  /* Counter table */
+  .counter-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: .88rem; }
+  .counter-table th, .counter-table td {
+    padding: 8px 12px; text-align: left;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .counter-table th { color: var(--text); font-weight: 600; background: var(--surface2); }
+
+  /* Spoiler */
+  .spoiler {
+    background: rgba(255,255,255,.03); border-radius: 8px;
+    padding: 14px 18px; margin: 12px 0;
+    border: 1px dashed var(--border);
+    font-style: italic; color: var(--text-dim); font-size: .9rem;
+  }
+
+  /* Quote */
+  .quote {
+    border-left: 3px solid var(--accent); padding: 14px 20px;
+    margin: 16px 0; background: var(--surface2);
+    border-radius: 0 10px 10px 0;
+    font-style: italic; color: var(--text-dim);
+  }
+  .quote-author { margin-top: 8px; font-size: .85rem; font-style: normal; color: var(--accent); }
+
+  /* Changelog */
+  .changelog { list-style: none; margin-left: 0; }
+  .changelog li { padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .changelog li:last-child { border: none; }
+  .changelog .date { color: var(--accent); font-weight: 600; }
+
+  /* Footer */
+  footer {
+    text-align: center; padding: 40px 24px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+    color: var(--text-dim); font-size: .85rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-links.open { display: flex; position: absolute; top: 64px; left: 0; right: 0;
+      background: var(--surface); padding: 12px; flex-wrap: wrap;
+      border-bottom: 1px solid var(--border); }
+    .nav-burger { display: block; }
+    .section { padding: 28px 20px; }
+    .hero-meta { gap: 16px; }
+    .ward-table, .counter-table { font-size: .8rem; }
+    .ward-table th, .ward-table td, .counter-table th, .counter-table td { padding: 6px 8px; }
+  }
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 1.8rem; }
+    .section { padding: 22px 16px; border-radius: 12px; }
+    .lane-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<!-- Nav -->
+<nav class="nav" id="navbar">
+  <div class="nav-logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    Гайд саппорта
+  </div>
+  <button class="nav-burger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#intro" class="active">Введение</a></li>
+    <li><a href="#role">Роль</a></li>
+    <li><a href="#duties">Обязанности</a></li>
+    <li><a href="#lanes">Лайны</a></li>
+    <li><a href="#items">Закуп</a></li>
+    <li><a href="#wards">Варды</a></li>
+    <li><a href="#counters">Контр-пики</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="intro">
+  <div class="hero-badge">
+    <span>⚔️</span> Dota 2 — Гайд
+  </div>
+  <h1>Гайд для саппортов</h1>
+  <p>Полное руководство по игре на поддержке: от стартового закупа до вардинга и контроля карты. Всё, что нужно знать саппорту.</p>
+  <div class="hero-meta">
+    <span>✍️ Автор: <strong>Blacit</strong></span>
+    <span>📅 Июль 2016</span>
+    <span>⭐ 4.0 / 164 оценки</span>
+  </div>
+  <div class="scroll-down"></div>
+</section>
+
+<div class="container">
+
+  <!-- Quote -->
+  <div class="quote" style="margin-bottom:28px;">
+    "Стабильный состав, регулярные тренировки и спокойствие во время игры — 90% победы."
+    <div class="quote-author">— M5.PGG</div>
+  </div>
+
+  <!-- Section 1: Who are supports -->
+  <div class="section visible" id="role">
+    <div class="section-header">
+      <div class="section-icon icon-green">🛡️</div>
+      <h2>Кто такие «Саппорты»?</h2>
+    </div>
+    <p><strong>Саппорт</strong> — это герой, который помогает раскачаться своему керри. Саппорты, как правило, независимы или очень слабо зависимы от вещей, что даёт им возможность не концентрироваться на фарме, оставив это занятие керри.</p>
+    <p>Задача саппорта — сделать фарм союзников приятным, а врагов — невыносимым. Каким образом? Разберём ниже.</p>
+    <div class="highlight-box">
+      <p style="margin:0;">🎥 Рекомендуем посмотреть: <a href="https://youtube.com/watch?v=kf_izl_BiQs" target="_blank" style="color:var(--accent)">YouTube: Основы саппорта</a> — видео не моё, но очень познавательное для новичков.</p>
+    </div>
+  </div>
+
+  <!-- Section 2: Duties -->
+  <div class="section" id="duties">
+    <div class="section-header">
+      <div class="section-icon icon-orange">⚡</div>
+      <h2>Что должен делать Support</h2>
+    </div>
+
+    <h3>1. Бебиситинг</h3>
+    <p>Саппорт должен приложить все усилия для того, чтобы керри мог спокойно фармить. В основном это проявляется в защите своего подопечного. Вы должны спасать своего союзника, даже ценой своей жизни.</p>
+
+    <h3>2. Харасс</h3>
+    <p>Саппорт обязан мешать вражескому герою фармить, постоянно нанося ему урон, а также не давать врагам обижать вашего союзника. Это дуэль между саппортами — кто победил в ней, у того и больше шансов на победу.</p>
+
+    <h3>3. Пуллинг</h3>
+    <p>Одно из самых ответственных занятий. Необходимо постоянно удерживать своих крипов как можно ближе к своей башне. Это даёт преимущество: вас труднее убить, легче убить противника, преимущество в опыте. Суть пулла — в отводе своих крипов к нейтральным монстрам.</p>
+
+    <h3>4. Ластхит и денай</h3>
+    <p><strong>Ластхит</strong> — о нём хороший саппорт должен забыть. Керри — наше всё, отдаём всех крипов ему.</p>
+    <p><strong>Денай</strong> — очень полезная вещь. Когда здоровье вашего крипа падает ниже половины, начинайте его атаковать и добивайте. Это поможет не пушить линию и помешает противнику получить опыт и золото.</p>
+  </div>
+
+  <!-- Section 3: Lane setups -->
+  <div class="section" id="lanes">
+    <div class="section-header">
+      <div class="section-icon icon-teal">🗺️</div>
+      <h2>Варианты расстановки героев</h2>
+    </div>
+
+    <div class="lane-grid">
+      <div class="lane-card">
+        <h4>2–1–2 (Классический дабл-лайн)</h4>
+        <p style="margin:0;">Герой второй позиции идёт в одиночку на центр. Хардсаппорт помогает керри на безопасной линии, второй саппорт — оффлайнеру. Самый стабильный вариант.</p>
+      </div>
+      <div class="lane-card">
+        <h4>3–1–1 (Агрессивный трипл-лайн)</h4>
+        <p style="margin:0;">Тройка на тяжёлой линии давит на вражеского керри, не давая ему фармить. Максимизирует фарм кор-героев.</p>
+      </div>
+      <div class="lane-card">
+        <h4>1–1–3 (Пассивный трипл-лайн)</h4>
+        <p style="margin:0;">Тройка на безопасной линии против оффлайнера. Используется для быстрого пуша башен и агрессивных стратегий.</p>
+      </div>
+      <div class="lane-card">
+        <h4>1–1–2 и лесник</h4>
+        <p style="margin:0;">Используется с Chen, Enchantress и другими лесниками. Лесник фармит и давит на линии, пока основные герои получают больше золота и опыта.</p>
+      </div>
+    </div>
+
+    <h3>Разница лайнов</h3>
+    <p><strong>Лёгкая (безопасная) линия</strong> — большая протяжённость от башни до крепости, близко к лесу. Для Сил Света — нижняя, для Сил Тьмы — верхняя.</p>
+    <p><strong>Тяжёлая линия</strong> — малая протяжённость от башни до крепости. Для Сил Света — верхняя, для Сил Тьмы — нижняя.</p>
+  </div>
+
+  <!-- Section 4: Starting items -->
+  <div class="section" id="items">
+    <div class="section-header">
+      <div class="section-icon icon-gold">🛒</div>
+      <h2>Стартовый закуп</h2>
+    </div>
+    <div class="spoiler">
+      <strong>Важно:</strong> Я знаю, что есть саппорты 4 и 5 позиции, но на пабликах редко встречаешь разделение по позициям.
+    </div>
+    <p>Вот что должны покупать <strong>все</strong> саппорты в начале:</p>
+    <div class="highlight-box">
+      <p style="margin:0;"><strong>Основной стартовый набор:</strong></p>
+      <ul style="margin:8px 0 0 20px;">
+        <li><strong>2 Observer Wards</strong> (один отдаём мидеру или хардовику)</li>
+        <li><strong>1 Courier</strong> (курьер)</li>
+        <li>Tango, Healing Salve, Clarity — по необходимости</li>
+        <li>2-3 Iron Branch для характеристик</li>
+      </ul>
+    </div>
+    <p>Курьер и варды — основа. Без них хороший саппорт не может считаться саппортом.</p>
+  </div>
+
+  <!-- Section 5: Tactics -->
+  <div class="section" id="tactics">
+    <div class="section-header">
+      <div class="section-icon icon-red">⚔️</div>
+      <h2>Тактика и бой</h2>
+    </div>
+    <p>Наша задача на линии — <strong>контрить своих крипов</strong> (денаить) и по возможности «гонять» оппонента, не давая ему фармить.</p>
+    <p>В замесах вы должны сделать всё, чтобы союзник выжил: станы, замедление, хил, блокировка противника. Варды, хил, дизэйбл и контроль — вот что нужно саппорту.</p>
+    <p>Главное в бою — не ворваться и умереть первым, не успев юзануть ничего. Врывайтесь со всеми, чтобы успеть похилить и кинуть дизэйбл, но держитесь подальше от врагов, чтобы вас не убили с самого старта. Саппорт всю игру играет на грани.</p>
+  </div>
+
+  <!-- Section 6: Wards -->
+  <div class="section" id="wards">
+    <div class="section-header">
+      <div class="section-icon icon-green">👁️</div>
+      <h2>Куда ставить варды</h2>
+    </div>
+    <p>Существует <strong>2 вида вардов</strong>:</p>
+    <table class="ward-table">
+      <thead>
+        <tr><th>Тип</th><th>Цена</th><th>Длительность</th><th>Дальность обзора</th><th>Особенности</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Observer</strong></td>
+          <td>65 золота</td>
+          <td>6 мин</td>
+          <td>1800 (день/ночь)</td>
+          <td>Даёт обзор, блокирует спауны</td>
+        </tr>
+        <tr>
+          <td><strong>Sentry</strong></td>
+          <td>200 (2 шт.)</td>
+          <td>3 мин</td>
+          <td>Малый + True Sight 800</td>
+          <td>Раскрывает невидимок</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Вардинг на ранней стадии (без лесника)</h3>
+    <p>До первой волны крипов команда распределяет задачи: кто-то покупает курьера, кто-то апгрейд. Саппорт берёт Observer Wards. Общение с командой — ключ к постоянному видению карты.</p>
+
+    <h3>Вардинг на ранней стадии (с лесником)</h3>
+    <p>Если у врага есть лесник (Legion Commander и др.), стоит «посещать» его, чтобы не дать выйти с нужными артефактами. Можно блокировать спауны крипов, поставив вард в радиус спауна (включите ALT для просмотра).</p>
+  </div>
+
+  <!-- Section 7: Semi-Support -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-orange">🔄</div>
+      <h2>Semi-Support (Семи-Саппорт)</h2>
+    </div>
+    <p>На лайне стараемся не фармить, если стоите с тем, кому фарм нужнее. Займитесь денаем, харасом врага, отводами.</p>
+    <p><strong>Стартовый закуп семи-саппорта:</strong> Tango, Healing Salve, Clarity, 2-3 Iron Branch. По мере игры собираются утилитарные предметы.</p>
+  </div>
+
+  <!-- Section 8: Counter-picks -->
+  <div class="section" id="counters">
+    <div class="section-header">
+      <div class="section-icon icon-red">🎯</div>
+      <h2>Контр-пики</h2>
+    </div>
+
+    <h3>Против кого лучше брать:</h3>
+    <p><strong>Alchemist, Bane, Centaur Warrunner, Doom, Dragon Knight, Enigma, Faceless Void, Huskar, Leshrac, Lifestealer, Luna, Magnus, Morphling, Necrophos, Omniknight, Spectre, Troll Warlord.</strong></p>
+
+    <h3>Против кого не надо брать:</h3>
+    <table class="counter-table">
+      <thead>
+        <tr><th>Герой</th><th>Контр-пики</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Ancient Apparition</td><td>Silencer, Riki, Doom, Zeus, Spectre, Drow, Ursa, Invoker, Nyx, Weaver, Brewmaster</td></tr>
+        <tr><td>Bane</td><td>Silencer, Doom, Riki, Naga, Rubick, Meepo, Tidehunter, Razor, Slark, CK, Zeus, Tusk, WD, Shadow Shaman, Sand King</td></tr>
+        <tr><td>Chen</td><td>Clinkz, Enchantress, Drow, Lifestealer, Ursa, Riki, AA, Nyx, Slark, PA, Meepo, Tusk, NS, Bounty, Troll, Huskar</td></tr>
+        <tr><td>Crystal Maiden</td><td>Juggernaut, Lina, Witch Doctor, Ursa, Clinkz, PA, CK, Lifestealer, Venomancer, Clockwerk</td></tr>
+        <tr><td>Dazzle</td><td>Axe, Ursa, Alchemist, Templar Assassin</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.85rem; font-style:italic; color:var(--text-dim); margin-top:8px;">Полный список — в оригинальном гайде на Steam.</p>
+  </div>
+
+  <!-- Section 9: Conclusion -->
+  <div class="section" style="border-color: rgba(255,68,68,.3); text-align:center;">
+    <div class="section-header" style="justify-content:center;">
+      <div class="section-icon icon-red">📜</div>
+      <h2>Заключение</h2>
+    </div>
+    <p style="font-size:1.05rem; color:var(--text); max-width:600px; margin:0 auto 24px;">
+      Спасибо, что уделили время этому руководству! Если вам понравилось — поставьте палец вверх и рекомендуйте друзьям-новичкам. Удачи на полях сражений! 🏆
+    </p>
+    <a href="https://funpay.com/users/17178819/" target="_blank" class="cta-button">
+      <span class="cta-icon">💎</span>
+      Перейти к автору на FunPay
+      <span class="cta-arrow">→</span>
+    </a>
+  </div>
+
+  <style>
+    .cta-button {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: linear-gradient(135deg, var(--accent), #ff8c42);
+      color: #fff; text-decoration: none;
+      padding: 16px 36px; border-radius: 14px;
+      font-weight: 700; font-size: 1.05rem;
+      transition: all .3s ease;
+      box-shadow: 0 4px 24px rgba(255,107,53,.3);
+      position: relative; overflow: hidden;
+    }
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 40px rgba(255,107,53,.5);
+    }
+    .cta-button:active { transform: translateY(0); }
+    .cta-icon { font-size: 1.3rem; }
+    .cta-arrow { transition: transform .3s; font-size: 1.2rem; }
+    .cta-button:hover .cta-arrow { transform: translateX(6px); }
+    .cta-button::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,.1) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform .6s;
+    }
+    .cta-button:hover::before { transform: translateX(100%); }
+  </style>
+
+  <!-- Changelog -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-teal">📝</div>
+      <h2>Обновления в руководстве</h2>
+    </div>
+    <ul class="changelog">
+      <li><span class="date">25.07.2016</span> — Правка в «Контр-пики». Добавление «Тактика боя». Изменения в «Против кого не надо брать». Добавлен раздел «Разница лайнов» и «Варианты расстановки героев». Добавлена карта стаков.</li>
+      <li><span class="date">22.07.2016</span> — Создание темы «Обновления в руководстве». Добавление «Как правильно сделать отводы».</li>
+      <li><span class="date">21.07.2016</span> — Добавление темы насчёт вардинга. Расписаны разные условия.</li>
+      <li><span class="date">20.07.2016</span> — Правка информации про варды.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p>Гайд создан на основе руководства Blacit из Steam Community</p>
+    <p style="margin-top:6px; font-size:.8rem;">Источники: dota2-i.ru, dota2.ru/forum, truepicker.com</p>
+  </footer>
+</div>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: .1 });
+
+  document.querySelectorAll('.section').forEach(s => observer.observe(s));
+
+  // Nav active state
+  const sections = document.querySelectorAll('.section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const navbar = document.getElementById('navbar');
+  let lastScroll = 0;
+
+  window.addEventListener('scroll', () => {
+    const current = window.scrollY;
+
+    // Nav hide/show on scroll
+    if (current > lastScroll && current > 100) navbar.classList.add('hidden');
+    else navbar.classList.remove('hidden');
+    lastScroll = current;
+
+    // Active link
+    let currentSection = '';
+    sections.forEach(s => {
+      const top = s.offsetTop - 150;
+      if (current >= top) currentSection = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + currentSection) a.classList.add('active');
+    });
+  });
+
+  // Close mobile nav on click
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>
