@@ -552,7 +552,7 @@ start "" "C:\Program Files (x86)\Steam\steam.exe" ^
       function loop() {
         const diff = smoothTarget - smoothCurrent;
         if (Math.abs(diff) > 0.5) {
-          smoothCurrent += diff * 0.12;
+          smoothCurrent += diff * 0.04;
           window.scrollTo(0, Math.round(smoothCurrent));
           requestAnimationFrame(loop);
         } else {
