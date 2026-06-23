@@ -22,14 +22,9 @@
   .bg-glow { position: fixed; inset: 0; z-index: -1; background: radial-gradient(ellipse at 50% 0%, rgba(255,107,53,.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 80%, rgba(0,212,170,.05) 0%, transparent 50%); }
 
   /* Nav */
-  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; background: rgba(10,10,15,.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); transition: transform .3s; }
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: center; background: rgba(10,10,15,.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); transition: transform .3s; }
   .nav.hidden { transform: translateY(-100%); }
-  .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: .95rem; }
-  .nav-logo svg { width: 20px; height: 20px; }
-  .nav-links { display: flex; gap: 6px; list-style: none; overflow-x: auto; }
-  .nav-links a { text-decoration: none; color: var(--text-dim); font-size: .78rem; font-weight: 500; padding: 6px 14px; border-radius: 8px; white-space: nowrap; transition: all .2s; }
-  .nav-links a:hover, .nav-links a.active { color: var(--text); background: var(--surface2); }
-  .nav-burger { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 8px; font-size: 1.3rem; }
+  .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1rem; color: var(--text); }
 
   /* Hero */
   .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 100px 24px 60px; position: relative; }
@@ -54,12 +49,12 @@
   .scroll-down::after { content: ''; width: 4px; height: 10px; background: var(--accent); border-radius: 2px; }
   @keyframes scrollBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
 
-  /* Guide Tabs */
-  .guide-tabs { display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
-  .guide-tab { flex: 1; min-width: 160px; text-align: center; padding: 14px 20px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); cursor: pointer; font-weight: 600; font-size: .9rem; color: var(--text-dim); transition: all .25s; font-family: inherit; }
-  .guide-tab:hover { border-color: rgba(255,107,53,.3); color: var(--text); }
-  .guide-tab.active { background: linear-gradient(135deg, rgba(255,107,53,.2), rgba(255,107,53,.05)); border-color: var(--accent); color: var(--accent); }
-  .guide-tab .tab-icon { display: block; font-size: 1.5rem; margin-bottom: 4px; }
+  /* Guide Tabs - Main Navigation */
+  .guide-tabs { display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; justify-content: center; }
+  .guide-tab { min-width: 180px; text-align: center; padding: 18px 28px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); cursor: pointer; font-weight: 700; font-size: .95rem; color: var(--text-dim); transition: all .3s; font-family: inherit; letter-spacing: .3px; }
+  .guide-tab:hover { border-color: rgba(255,107,53,.4); color: var(--text); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,.3); }
+  .guide-tab.active { background: linear-gradient(135deg, rgba(255,107,53,.2), rgba(255,107,53,.05)); border-color: var(--accent); color: var(--accent); box-shadow: 0 4px 24px rgba(255,107,53,.15); }
+  .guide-tab .tab-icon { display: block; font-size: 1.6rem; margin-bottom: 6px; }
   .guide-content { display: none; }
   .guide-content.active { display: block; }
 
@@ -97,10 +92,6 @@
   .lane-card { background: var(--surface2); border-radius: 10px; padding: 16px 20px; border: 1px solid var(--border); }
   .lane-card h4 { font-size: .95rem; font-weight: 700; margin-bottom: 4px; color: var(--accent); }
 
-  .changelog { list-style: none; margin-left: 0; }
-  .changelog li { padding: 6px 0; border-bottom: 1px solid var(--border); }
-  .changelog li:last-child { border: none; }
-  .changelog .date { color: var(--accent); font-weight: 600; }
   .spoiler { background: rgba(255,255,255,.03); border-radius: 8px; padding: 12px 16px; margin: 10px 0; border: 1px dashed var(--border); font-style: italic; color: var(--text-dim); font-size: .9rem; }
   .hero-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
   .hero-tag { background: var(--surface2); border: 1px solid var(--border); padding: 4px 12px; border-radius: 6px; font-size: .82rem; color: var(--text-dim); }
@@ -117,9 +108,6 @@
   footer { text-align: center; padding: 40px 24px; border-top: 1px solid var(--border); margin-top: 40px; color: var(--text-dim); font-size: .85rem; }
 
   @media (max-width: 768px) {
-    .nav-links { display: none; }
-    .nav-links.open { display: flex; position: absolute; top: 64px; left: 0; right: 0; background: var(--surface); padding: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--border); }
-    .nav-burger { display: block; }
     .section { padding: 24px 18px; }
     .hero-meta { gap: 24px; }
     .guide-tab { min-width: 100px; padding: 10px 14px; font-size: .82rem; }
@@ -132,16 +120,9 @@
 
 <nav class="nav" id="navbar">
   <div class="nav-logo">
-    <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
     Гайды Dota 2
   </div>
-  <button class="nav-burger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#hero" class="active">Главная</a></li>
-    <li><a href="#guide-support">Саппорт</a></li>
-    <li><a href="#guide-carry">Керри</a></li>
-    <li><a href="#guide-farm">Фарм</a></li>
-  </ul>
 </nav>
 
 <section class="hero" id="hero">
@@ -300,11 +281,6 @@
         <h2>Semi-Carry и Hard Carry</h2>
       </div>
       <p><strong>Hard-Carry</strong> — очень сильны в поздней игре. Способны в одиночку расправиться с несколькими противниками при хорошем уровне и артефактах.</p>
-      <div class="img-grid">
-        <img src="https://images.steamusercontent.com/ugc/490148340906839071/62C5F64984499A438DB453B46DC36204545D519C/" alt="Hero" loading="lazy" onerror="this.style.display='none'">
-        <img src="https://images.steamusercontent.com/ugc/490148340906840941/1FBABEE0CA7F4BAEFB97A7837DDA90CB33126B34/" alt="Hero" loading="lazy" onerror="this.style.display='none'">
-        <img src="https://images.steamusercontent.com/ugc/490148340906835233/F408C62FE4447AA16C331EC28A761EBA05AD2D31/" alt="Hero" loading="lazy" onerror="this.style.display='none'">
-      </div>
     </div>
 
     <div class="section">
@@ -376,17 +352,6 @@
       </div>
     </div>
 
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-teal">📝</div>
-        <h2>Обновления руководства</h2>
-      </div>
-      <ul class="changelog">
-        <li><span class="date">29.07.2016</span> — Убран комикс с Антимагом и Сатаником</li>
-        <li><span class="date">25.07.2016</span> — Добавлены контр-пики Riki, раздел Semi-Carry / Hard-Carry</li>
-        <li><span class="date">24.07.2016</span> — Добавлены контр-пики TA, Alch, Morphling. Orb of Venom</li>
-      </ul>
-    </div>
   </div>
 
   <!-- === FARM GUIDE === -->
@@ -494,10 +459,7 @@
     </a>
   </div>
 
-  <footer>
-    <p>Сборник гайдов по Dota 2 — Саппорт, Керри, Фарм</p>
-    <p style="margin-top:6px; font-size:.8rem;">На основе руководств Steam Community</p>
-  </footer>
+  <footer></footer>
 </div>
 
 <script>
@@ -554,9 +516,7 @@
   }, { threshold: .1 });
   document.querySelectorAll('.section').forEach(s => observer.observe(s));
 
-  // Nav
-  const sections = document.querySelectorAll('.guide-content.active .section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
+  // Nav hide/show
   const navbar = document.getElementById('navbar');
   let lastScroll = 0;
   window.addEventListener('scroll', () => {
@@ -564,26 +524,6 @@
     if (current > lastScroll && current > 100) navbar.classList.add('hidden');
     else navbar.classList.remove('hidden');
     lastScroll = current;
-  });
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    a.addEventListener('click', () => { document.getElementById('navLinks').classList.remove('open'); });
-  });
-
-  // Tab switching from nav
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    a.addEventListener('click', (e) => {
-      const href = a.getAttribute('href');
-      if (href === '#guide-support' || href === '#guide-carry' || href === '#guide-farm') {
-        e.preventDefault();
-        const guide = href.replace('#guide-', '');
-        document.querySelectorAll('.guide-tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.guide-content').forEach(c => c.classList.remove('active'));
-        document.querySelector(`.guide-tab[data-guide="${guide}"]`).classList.add('active');
-        document.getElementById('guide-' + guide).classList.add('active');
-        document.querySelectorAll('.section').forEach(s => { if (s.offsetParent !== null) s.classList.add('visible'); });
-        document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
-      }
-    });
   });
 </script>
 </body>
