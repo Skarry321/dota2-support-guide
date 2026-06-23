@@ -53,9 +53,11 @@
   .section code { background: var(--surface2); padding: 1px 6px; border-radius: 4px; font-size: .85rem; color: var(--accent); }
   .section pre { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin: 10px 0; font-size: .8rem; color: var(--text-dim); overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
   .section .box { background: var(--surface2); border-radius: 8px; padding: 14px 18px; margin: 10px 0; border: 1px solid var(--border); }
-  .section .img-full { width: 100%; border-radius: 8px; margin: 10px 0; border: 1px solid var(--border); }
-  .section .img-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin: 10px 0; }
-  .section .img-grid img { width: 100%; border-radius: 6px; border: 1px solid var(--border); }
+  .section .img-full { width: 100%; border-radius: 12px; margin: 14px 0; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,.3), 0 0 0 1px rgba(255,107,53,.05); transition: all .4s ease; }
+  .section .img-full:hover { transform: scale(1.01); box-shadow: 0 8px 40px rgba(255,107,53,.15), 0 0 0 1px rgba(255,107,53,.15); border-color: var(--accent); }
+  .section .img-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin: 14px 0; }
+  .section .img-grid img { width: 100%; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 3px 12px rgba(0,0,0,.25); transition: all .35s ease; }
+  .section .img-grid img:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 30px rgba(255,107,53,.2); border-color: var(--accent); }
   .lane-grid { display: grid; gap: 10px; margin: 10px 0; }
   .lane-card { background: var(--surface2); border-radius: 8px; padding: 14px 18px; border: 1px solid var(--border); }
   .lane-card h4 { font-size: .9rem; font-weight: 700; margin-bottom: 4px; color: var(--accent); }
