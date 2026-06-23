@@ -3,17 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Гайды Dota 2 — Саппорт, Керри, Фарм</title>
+<title>Гайды Dota 2</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #0a0a0f; --surface: #12121a; --surface2: #1a1a28;
-    --border: #2a2a3e; --text: #e8e8f0; --text-dim: #8888a8;
-    --accent: #ff6b35; --accent2: #00d4aa;
-    --dota-red: #ff4444; --dota-gold: #ffd700; --dota-green: #00ff88;
-    --radius: 16px; --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  }
-  html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--accent) var(--surface); }
+  :root { --bg: #0a0a0f; --surface: #12121a; --surface2: #1a1a28; --border: #2a2a3e; --text: #e8e8f0; --text-dim: #8888a8; --accent: #ff6b35; --accent2: #00d4aa; --dota-red: #ff4444; --dota-gold: #ffd700; --dota-green: #00ff88; --radius: 16px; --font: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+  html { scroll-behavior: smooth; }
   body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.7; }
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--surface); }
@@ -21,96 +15,90 @@
   .bg-grid { position: fixed; inset: 0; z-index: -1; background-image: linear-gradient(rgba(255,107,53,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,107,53,.03) 1px, transparent 1px); background-size: 60px 60px; }
   .bg-glow { position: fixed; inset: 0; z-index: -1; background: radial-gradient(ellipse at 50% 0%, rgba(255,107,53,.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 80%, rgba(0,212,170,.05) 0%, transparent 50%); }
 
-  /* Nav */
-  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: center; background: rgba(10,10,15,.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); transition: transform .3s; }
-  .nav.hidden { transform: translateY(-100%); }
-  .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1rem; color: var(--text); }
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 24px; height: 60px; display: flex; align-items: center; justify-content: center; background: rgba(10,10,15,.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: .95rem; color: var(--text); }
 
   /* Hero */
-  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 100px 24px 60px; position: relative; }
-  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--surface2); border: 1px solid var(--border); padding: 8px 20px; border-radius: 100px; font-size: .82rem; color: var(--text-dim); margin-bottom: 28px; }
-  .hero h1 { font-size: clamp(2.2rem, 6vw, 4.2rem); font-weight: 900; line-height: 1.1; background: linear-gradient(135deg, #ff6b35, #ffd700, #00d4aa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 20px; }
-  .hero p { font-size: 1.1rem; color: var(--text-dim); max-width: 650px; margin: 0 auto 32px; }
+  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 80px 24px 40px; position: relative; }
+  .hero h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 900; line-height: 1.1; background: linear-gradient(135deg, #ff6b35, #ffd700, #00d4aa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
+  .hero p { font-size: 1rem; color: var(--text-dim); max-width: 560px; margin: 0 auto 32px; }
 
-  .hero-meta { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; align-items: flex-start; }
-  .hero-meta-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .hero-meta-item .label { font-size: .75rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
-  .hero-meta-item .value { font-size: 1.1rem; font-weight: 700; color: var(--text); }
-
-  /* Like system */
-  .like-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--surface2); border: 1px solid var(--border); padding: 10px 24px; border-radius: 100px; cursor: pointer; font-size: 1rem; color: var(--text-dim); transition: all .3s; font-family: inherit; }
+  .hero-meta { display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; align-items: flex-start; margin-bottom: 44px; }
+  .hero-meta-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .hero-meta-item .label { font-size: .7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+  .hero-meta-item .value { font-size: 1rem; font-weight: 700; color: var(--text); }
+  .like-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--surface2); border: 1px solid var(--border); padding: 6px 16px; border-radius: 100px; cursor: pointer; font-size: .85rem; color: var(--text-dim); transition: all .3s; font-family: inherit; }
   .like-btn:hover { border-color: var(--accent); color: var(--text); }
   .like-btn.liked { background: rgba(255,107,53,.15); border-color: var(--accent); color: var(--accent); }
-  .like-btn .icon { font-size: 1.3rem; transition: transform .3s; }
-  .like-btn.liked .icon { transform: scale(1.2); }
-  .like-btn .count { font-weight: 700; }
+  .like-btn .icon { font-size: 1.1rem; }
+  .like-btn .count { font-weight: 600; }
 
-  .scroll-down { position: absolute; bottom: 32px; width: 36px; height: 60px; border-radius: 18px; border: 2px solid var(--border); display: flex; justify-content: center; padding-top: 12px; animation: scrollBounce 2s ease-in-out infinite; }
-  .scroll-down::after { content: ''; width: 4px; height: 10px; background: var(--accent); border-radius: 2px; }
-  @keyframes scrollBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+  /* Navigation Cards */
+  .nav-cards { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; max-width: 800px; margin: 0 auto; }
+  .nav-card { flex: 1; min-width: 150px; max-width: 200px; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px 16px; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); cursor: pointer; transition: all .35s; font-family: inherit; color: var(--text-dim); text-decoration: none; position: relative; overflow: hidden; }
+  .nav-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, transparent, rgba(255,107,53,.05)); opacity: 0; transition: opacity .35s; }
+  .nav-card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 12px 40px rgba(255,107,53,.15); color: var(--text); }
+  .nav-card:hover::before { opacity: 1; }
+  .nav-card.active { border-color: var(--accent); color: var(--accent); background: linear-gradient(135deg, rgba(255,107,53,.12), rgba(255,107,53,.03)); box-shadow: 0 8px 32px rgba(255,107,53,.1); }
+  .nav-card-icon { font-size: 2rem; line-height: 1; position: relative; }
+  .nav-card-title { font-size: .85rem; font-weight: 700; position: relative; }
+  .nav-card-desc { font-size: .7rem; color: var(--text-dim); text-align: center; position: relative; }
 
-  /* Guide Tabs - Main Navigation */
-  .guide-tabs { display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; justify-content: center; }
-  .guide-tab { min-width: 180px; text-align: center; padding: 18px 28px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); cursor: pointer; font-weight: 700; font-size: .95rem; color: var(--text-dim); transition: all .3s; font-family: inherit; letter-spacing: .3px; }
-  .guide-tab:hover { border-color: rgba(255,107,53,.4); color: var(--text); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,.3); }
-  .guide-tab.active { background: linear-gradient(135deg, rgba(255,107,53,.2), rgba(255,107,53,.05)); border-color: var(--accent); color: var(--accent); box-shadow: 0 4px 24px rgba(255,107,53,.15); }
-  .guide-tab .tab-icon { display: block; font-size: 1.6rem; margin-bottom: 6px; }
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px 60px; }
+
   .guide-content { display: none; }
   .guide-content.active { display: block; }
+  .guide-content.active .section.visible { opacity: 1; transform: translateY(0); }
 
-  .container { max-width: 860px; margin: 0 auto; padding: 0 24px 80px; }
-  .quote { border-left: 3px solid var(--accent); padding: 14px 20px; margin: 16px 0; background: var(--surface2); border-radius: 0 10px 10px 0; font-style: italic; color: var(--text-dim); }
-  .quote-author { margin-top: 8px; font-size: .85rem; font-style: normal; color: var(--accent); }
-
-  /* Section */
-  .section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px; margin-bottom: 24px; transition: transform .3s, box-shadow .3s; opacity: 0; transform: translateY(30px); }
+  .section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 20px; transition: transform .3s, box-shadow .3s, opacity .5s; opacity: 0; transform: translateY(24px); }
   .section.visible { opacity: 1; transform: translateY(0); }
-  .section:hover { border-color: rgba(255,107,53,.3); box-shadow: 0 8px 40px rgba(0,0,0,.3); }
-  .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
-  .section-icon { width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-  .icon-orange { background: rgba(255,107,53,.15); color: var(--accent); }
-  .icon-green { background: rgba(0,255,136,.12); color: var(--dota-green); }
-  .icon-gold { background: rgba(255,215,0,.12); color: var(--dota-gold); }
-  .icon-red { background: rgba(255,68,68,.12); color: var(--dota-red); }
-  .icon-teal { background: rgba(0,212,170,.12); color: var(--accent2); }
-  .icon-purple { background: rgba(160,100,255,.12); color: #a064ff; }
-  .icon-blue { background: rgba(50,150,255,.12); color: #3296ff; }
-  .section h2 { font-size: 1.2rem; font-weight: 700; }
-  .section h3 { font-size: 1rem; font-weight: 600; margin: 16px 0 8px; color: var(--accent); }
-  .section p { color: var(--text-dim); font-size: .95rem; margin-bottom: 10px; }
-  .section ul, .section ol { margin: 8px 0 12px 22px; color: var(--text-dim); font-size: .95rem; }
-  .section li { margin-bottom: 6px; }
+  .section:hover { border-color: rgba(255,107,53,.25); box-shadow: 0 6px 30px rgba(0,0,0,.25); }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .section-icon { width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+  .icon-o { background: rgba(255,107,53,.15); color: var(--accent); }
+  .icon-g { background: rgba(0,255,136,.12); color: var(--dota-green); }
+  .icon-y { background: rgba(255,215,0,.12); color: var(--dota-gold); }
+  .icon-r { background: rgba(255,68,68,.12); color: var(--dota-red); }
+  .icon-t { background: rgba(0,212,170,.12); color: var(--accent2); }
+  .icon-p { background: rgba(160,100,255,.12); color: #a064ff; }
+  .icon-b { background: rgba(50,150,255,.12); color: #3296ff; }
+  .section h2 { font-size: 1.15rem; font-weight: 700; }
+  .section h3 { font-size: .95rem; font-weight: 600; margin: 14px 0 6px; color: var(--accent); }
+  .section p { color: var(--text-dim); font-size: .92rem; margin-bottom: 8px; }
+  .section ul, .section ol { margin: 6px 0 10px 20px; color: var(--text-dim); font-size: .92rem; }
+  .section li { margin-bottom: 5px; }
   .section li::marker { color: var(--accent); }
   .section strong { color: var(--text); font-weight: 600; }
-  .section .highlight-box { background: var(--surface2); border-radius: 10px; padding: 16px 20px; margin: 12px 0; border: 1px solid var(--border); }
-  .section .img-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 12px 0; }
-  .section .img-grid img { width: 100%; border-radius: 8px; border: 1px solid var(--border); }
-  .section .img-full { width: 100%; border-radius: 10px; margin: 12px 0; border: 1px solid var(--border); }
-  .section .img-inline { display: inline; height: 32px; vertical-align: middle; margin: 0 4px; border-radius: 4px; }
+  .section code { background: var(--surface2); padding: 1px 6px; border-radius: 4px; font-size: .85rem; color: var(--accent); }
+  .section pre { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin: 10px 0; font-size: .82rem; color: var(--text-dim); overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
+  .section .highlight-box { background: var(--surface2); border-radius: 8px; padding: 14px 18px; margin: 10px 0; border: 1px solid var(--border); }
+  .section .img-full { width: 100%; border-radius: 8px; margin: 10px 0; border: 1px solid var(--border); }
+  .section .img-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin: 10px 0; }
+  .section .img-grid img { width: 100%; border-radius: 6px; border: 1px solid var(--border); }
+  .lane-grid { display: grid; gap: 10px; margin: 10px 0; }
+  .lane-card { background: var(--surface2); border-radius: 8px; padding: 14px 18px; border: 1px solid var(--border); }
+  .lane-card h4 { font-size: .9rem; font-weight: 700; margin-bottom: 3px; color: var(--accent); }
+  .spoiler { background: rgba(255,255,255,.02); border-radius: 6px; padding: 10px 14px; margin: 8px 0; border: 1px dashed var(--border); font-style: italic; color: var(--text-dim); font-size: .88rem; }
+  .hero-list { display: flex; flex-wrap: wrap; gap: 5px; margin: 6px 0; }
+  .hero-tag { background: var(--surface2); border: 1px solid var(--border); padding: 3px 10px; border-radius: 5px; font-size: .8rem; color: var(--text-dim); }
+  .cmd-list { list-style: none; margin-left: 0; }
+  .cmd-list li { padding: 6px 0; border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: flex-start; }
+  .cmd-list li:last-child { border: none; }
+  .cmd-tag { font-weight: 700; color: var(--accent); white-space: nowrap; font-family: monospace; font-size: .85rem; min-width: 130px; }
 
-  .lane-grid { display: grid; gap: 12px; margin: 12px 0; }
-  .lane-card { background: var(--surface2); border-radius: 10px; padding: 16px 20px; border: 1px solid var(--border); }
-  .lane-card h4 { font-size: .95rem; font-weight: 700; margin-bottom: 4px; color: var(--accent); }
-
-  .spoiler { background: rgba(255,255,255,.03); border-radius: 8px; padding: 12px 16px; margin: 10px 0; border: 1px dashed var(--border); font-style: italic; color: var(--text-dim); font-size: .9rem; }
-  .hero-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
-  .hero-tag { background: var(--surface2); border: 1px solid var(--border); padding: 4px 12px; border-radius: 6px; font-size: .82rem; color: var(--text-dim); }
-
-  /* CTA */
-  .cta-button { display: inline-flex; align-items: center; gap: 12px; background: linear-gradient(135deg, var(--accent), #ff8c42); color: #fff; text-decoration: none; padding: 16px 36px; border-radius: 14px; font-weight: 700; font-size: 1.05rem; transition: all .3s ease; box-shadow: 0 4px 24px rgba(255,107,53,.3); position: relative; overflow: hidden; }
-  .cta-button:hover { transform: translateY(-3px); box-shadow: 0 8px 40px rgba(255,107,53,.5); }
-  .cta-button:active { transform: translateY(0); }
-  .cta-button .cta-arrow { transition: transform .3s; font-size: 1.2rem; }
-  .cta-button:hover .cta-arrow { transform: translateX(6px); }
+  .cta-button { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, var(--accent), #ff8c42); color: #fff; text-decoration: none; padding: 14px 32px; border-radius: 12px; font-weight: 700; font-size: 1rem; transition: all .3s; box-shadow: 0 4px 20px rgba(255,107,53,.3); position: relative; overflow: hidden; }
+  .cta-button:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(255,107,53,.45); }
+  .cta-button .cta-arrow { transition: transform .3s; }
+  .cta-button:hover .cta-arrow { transform: translateX(5px); }
   .cta-button::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,.1) 50%, transparent 70%); transform: translateX(-100%); transition: transform .6s; }
   .cta-button:hover::before { transform: translateX(100%); }
 
-  footer { text-align: center; padding: 40px 24px; border-top: 1px solid var(--border); margin-top: 40px; color: var(--text-dim); font-size: .85rem; }
-
-  @media (max-width: 768px) {
-    .section { padding: 24px 18px; }
-    .hero-meta { gap: 24px; }
-    .guide-tab { min-width: 100px; padding: 10px 14px; font-size: .82rem; }
+  @media (max-width: 640px) {
+    .section { padding: 20px 16px; }
+    .nav-card { min-width: 130px; padding: 14px 12px; }
+    .nav-card-icon { font-size: 1.5rem; }
+    .hero-meta { gap: 20px; }
+    .cmd-tag { min-width: 80px; font-size: .78rem; }
   }
 </style>
 </head>
@@ -118,413 +106,305 @@
 <div class="bg-grid"></div>
 <div class="bg-glow"></div>
 
-<nav class="nav" id="navbar">
-  <div class="nav-logo">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-    Гайды Dota 2
-  </div>
-</nav>
+<nav class="nav"><div class="nav-logo">🎮 Гайды Dota 2</div></nav>
 
-<section class="hero" id="hero">
-  <div class="hero-badge">⚔️ Dota 2 — Сборник гайдов</div>
+<section class="hero" id="top">
   <h1>Гайды по Dota 2</h1>
-  <p>Саппорт, Керри и Фарм — три главные роли. Полные руководства для новичков и опытных игроков.</p>
+  <p>Саппорт, Керри, Фарм и Оптимизация — полные руководства</p>
   <div class="hero-meta">
-    <div class="hero-meta-item">
-      <span class="label">✍️ Автор</span>
-      <span class="value">Skarry</span>
-    </div>
-    <div class="hero-meta-item">
-      <span class="label">📅 Дата</span>
-      <span class="value">Июнь 2026</span>
-    </div>
-    <div class="hero-meta-item">
-      <span class="label">⭐ Рейтинг</span>
-      <button class="like-btn" id="likeBtn" onclick="toggleLike()">
-        <span class="icon" id="likeIcon">🤍</span>
-        <span class="count" id="likeCount">164</span>
-      </button>
-    </div>
+    <div class="hero-meta-item"><span class="label">✍️ Автор</span><span class="value">Skarry</span></div>
+    <div class="hero-meta-item"><span class="label">📅 Дата</span><span class="value">Июнь 2026</span></div>
+    <div class="hero-meta-item"><span class="label">⭐ Оценка</span><button class="like-btn" id="likeBtn" onclick="toggleLike()"><span class="icon" id="likeIcon">🤍</span><span class="count" id="likeCount">164</span></button></div>
   </div>
-  <div class="scroll-down"></div>
+
+  <!-- Navigation cards -->
+  <div class="nav-cards">
+    <button class="nav-card active" data-guide="support">
+      <span class="nav-card-icon">🛡️</span>
+      <span class="nav-card-title">Саппорт</span>
+      <span class="nav-card-desc">Роль поддержки</span>
+    </button>
+    <button class="nav-card" data-guide="carry">
+      <span class="nav-card-icon">⚔️</span>
+      <span class="nav-card-title">Керри</span>
+      <span class="nav-card-desc">Основной дамагер</span>
+    </button>
+    <button class="nav-card" data-guide="farm">
+      <span class="nav-card-icon">💰</span>
+      <span class="nav-card-title">Фарм</span>
+      <span class="nav-card-desc">Золото и опыт</span>
+    </button>
+    <button class="nav-card" data-guide="optimization">
+      <span class="nav-card-icon">⚡</span>
+      <span class="nav-card-title">Оптимизация</span>
+      <span class="nav-card-desc">FPS и запуск</span>
+    </button>
+  </div>
 </section>
 
 <div class="container">
-  <div class="quote">
-    "Стабильный состав, регулярные тренировки и спокойствие во время игры — 90% победы."
-    <div class="quote-author">— M5.PGG</div>
-  </div>
-
-  <!-- Tab buttons -->
-  <div class="guide-tabs" id="guideTabs">
-    <button class="guide-tab active" data-guide="support">
-      <span class="tab-icon">🛡️</span> Саппорт
-    </button>
-    <button class="guide-tab" data-guide="carry">
-      <span class="tab-icon">⚔️</span> Керри
-    </button>
-    <button class="guide-tab" data-guide="farm">
-      <span class="tab-icon">💰</span> Фарм
-    </button>
-  </div>
-
-  <!-- === SUPPORT GUIDE === -->
+  <!-- === SUPPORT === -->
   <div class="guide-content active" id="guide-support">
-
-    <div class="section visible" id="role">
-      <div class="section-header">
-        <div class="section-icon icon-green">🛡️</div>
-        <h2>Кто такие «Саппорты»?</h2>
-      </div>
-      <p><strong>Саппорт</strong> — герой, который помогает раскачаться своему керри. Саппорты слабо зависимы от вещей, что даёт им возможность не концентрироваться на фарме. Задача саппорта — сделать фарм союзников приятным, а врагов — невыносимым.</p>
-      <img class="img-full" src="https://images.steamusercontent.com/ugc/272849658873111209/5506867BEA7CE5E194CCB10F4E24537F5A4A3789/" alt="Support role" loading="lazy" onerror="this.style.display='none'">
-      <div class="highlight-box"><p style="margin:0;">🎥 Рекомендуем: <a href="https://youtube.com/watch?v=kf_izl_BiQs" target="_blank" style="color:var(--accent)">YouTube: Основы саппорта</a></p></div>
+    <div class="section visible">
+      <div class="section-header"><div class="section-icon icon-g">🛡️</div><h2>Кто такие «Саппорты»?</h2></div>
+      <p><strong>Саппорт</strong> — герой, который помогает раскачаться своему керри. Саппорты слабо зависимы от вещей. Задача — сделать фарм союзников приятным, а врагов — невыносимым.</p>
+      <div class="highlight-box"><p style="margin:0;">🎥 <a href="https://youtube.com/watch?v=kf_izl_BiQs" target="_blank" style="color:var(--accent)">YouTube: Основы саппорта</a></p></div>
     </div>
-
-    <div class="section" id="duties">
-      <div class="section-header">
-        <div class="section-icon icon-orange">⚡</div>
-        <h2>Что должен делать Support</h2>
-      </div>
-      <h3>1. Бебиситинг</h3>
-      <p>Саппорт должен приложить все усилия для того, чтобы керри мог спокойно фармить. Вы должны спасать союзника даже ценой своей жизни.</p>
-      <h3>2. Харасс</h3>
-      <p>Саппорт обязан мешать вражескому герою фармить, нанося урон и не давая обижать союзника. Это дуэль между саппортами — кто победил, у того больше шансов.</p>
-      <h3>3. Пуллинг</h3>
-      <p>Необходимо удерживать крипов ближе к своей башне. Суть пулла — в отводе своих крипов к нейтральным монстрам.</p>
-      <h3>4. Ластхит и денай</h3>
-      <p>Ластхит — хороший саппорт о нём забывает, отдавая крипов керри. Денай — добивайте своих крипов ниже 50% ХП, чтобы враг не получал опыт и золото.</p>
-      <img class="img-full" src="https://images.steamusercontent.com/ugc/272850349794980561/5380B63845CDA27F2AC4A3867E466C29B8BE8DF1/" alt="Lane map" loading="lazy" onerror="this.style.display='none'">
-    </div>
-
-    <div class="section" id="lanes">
-      <div class="section-header">
-        <div class="section-icon icon-teal">🗺️</div>
-        <h2>Варианты расстановки героев</h2>
-      </div>
-      <div class="lane-grid">
-        <div class="lane-card"><h4>2–1–2 (Классика)</h4><p style="margin:0;">Мидер в одиночку на центре. Хардсаппорт помогает керри, второй — оффлайнеру.</p></div>
-        <div class="lane-card"><h4>3–1–1 (Агрессивный трипл-лайн)</h4><p style="margin:0;">Тройка на тяжёлой линии давит вражеского керри.</p></div>
-        <div class="lane-card"><h4>1–1–3 (Пассивный трипл-лайн)</h4><p style="margin:0;">Тройка на безопасной линии для пуша и агрессии.</p></div>
-        <div class="lane-card"><h4>1–1–2 и лесник</h4><p style="margin:0;">С Chen, Enchantress — лесник фармит и давит на линии.</p></div>
-      </div>
-    </div>
-
-    <div class="section" id="items-support">
-      <div class="section-header">
-        <div class="section-icon icon-gold">🛒</div>
-        <h2>Стартовый закуп саппорта</h2>
-      </div>
-      <div class="spoiler">Я знаю про 4 и 5 позиции, но на пабликах разделение редкое.</div>
-      <div class="highlight-box">
-        <p><strong>Стартовый набор:</strong></p>
-        <ul>
-          <li><strong>2 Observer Wards</strong> (один — мидеру или хардовику)</li>
-          <li><strong>1 Courier</strong></li>
-          <li>Tango, Healing Salve, Clarity, 2-3 Iron Branch</li>
-        </ul>
-      </div>
-      <img class="img-full" src="https://images.steamusercontent.com/ugc/272849658873114063/8B31DE406CF6D4F2F0679743100B6A76B8CE63F5/" alt="Starting items" loading="lazy" onerror="this.style.display='none'">
-    </div>
-
     <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-red">⚔️</div>
-        <h2>Тактика и бой</h2>
-      </div>
-      <p>На линии — денай и харас. В замесах — сделайте всё, чтобы союзник выжил: станы, замедление, хил, блок. Варды, хил, дизэйбл и контроль — вот что нужно саппорту. Главное — не умирать первым, не успев юзануть ничего.</p>
+      <div class="section-header"><div class="section-icon icon-o">⚡</div><h2>Что должен делать Support</h2></div>
+      <h3>1. Бебиситинг</h3><p>Саппорт должен спасать керри даже ценой своей жизни.</p>
+      <h3>2. Харасс</h3><p>Мешать врагу фармить, наносить урон. Дуэль саппортов.</p>
+      <h3>3. Пуллинг</h3><p>Удерживать крипов ближе к башне через отвод к нейтралам.</p>
+      <h3>4. Денай</h3><p>Добивать своих крипов ниже 50% ХП, чтобы враг не получал опыт.</p>
     </div>
-
-    <div class="section" id="wards">
-      <div class="section-header">
-        <div class="section-icon icon-green">👁️</div>
-        <h2>Куда ставить варды</h2>
+    <div class="section">
+      <div class="section-header"><div class="section-icon icon-t">🗺️</div><h2>Расстановка героев</h2></div>
+      <div class="lane-grid">
+        <div class="lane-card"><h4>2–1–2</h4><p style="margin:0;">Мидер соло, саппорт с керри, второй с оффлайнером.</p></div>
+        <div class="lane-card"><h4>3–1–1</h4><p style="margin:0;">Тройка на тяжёлой линии давит врага.</p></div>
+        <div class="lane-card"><h4>1–1–3</h4><p style="margin:0;">Тройка на безопасной для пуша.</p></div>
+        <div class="lane-card"><h4>1–1–2 + лес</h4><p style="margin:0;">С Chen, Enchantress.</p></div>
       </div>
-      <p><strong>Observer</strong> — 65 золота, 6 мин, обзор 1800. <strong>Sentry</strong> — 200 (2 шт.), 3 мин, True Sight 800.</p>
-      <p>На ранней стадии саппорт берёт Observer Wards. Если у врага лесник — блокируйте спауны крипов вардами (включите ALT для просмотра радиусов).</p>
     </div>
-
-    <div class="section" id="semi-support">
-      <div class="section-header">
-        <div class="section-icon icon-orange">🔄</div>
-        <h2>Semi-Support</h2>
-      </div>
-      <p>Не фармите, если рядом тот, кому фарм нужнее. Денай, харас, отводы. Стартовый закуп: Tango, Healing Salve, Clarity, 2-3 Iron Branch.</p>
+    <div class="section">
+      <div class="section-header"><div class="section-icon icon-y">🛒</div><h2>Стартовый закуп</h2></div>
+      <div class="highlight-box"><ul><li><strong>2 Observer Wards</strong></li><li><strong>1 Courier</strong></li><li>Tango, Salve, Clarity, веточки</li></ul></div>
     </div>
-
-    <div class="section" id="counters-support">
-      <div class="section-header">
-        <div class="section-icon icon-red">🎯</div>
-        <h2>Контр-пики</h2>
-      </div>
-      <p><strong>Лучшие герои:</strong> Alchemist, Bane, Centaur, Doom, DK, Enigma, Faceless Void, Huskar, Leshrac, Lifestealer, Luna, Magnus, Morphling, Necrophos, Omni, Spectre, Troll.</p>
-      <p><strong>Осторожно:</strong> AA (контры: Silencer, Riki, Doom), Bane (Silencer, Doom, Riki, Naga, Rubick), Chen (Clinkz, Enchantress, Drow, Lifestealer, Ursa), CM (Jugg, Lina, WD, Ursa), Dazzle (Axe, Ursa, Alch).</p>
+    <div class="section">
+      <div class="section-header"><div class="section-icon icon-r">⚔️</div><h2>Тактика и контроль</h2></div>
+      <p>В замесах — станы, хил, дизэйбл. Не умирайте первым.</p>
     </div>
   </div>
 
-  <!-- === CARRY GUIDE === -->
+  <!-- === CARRY === -->
   <div class="guide-content" id="guide-carry">
-
     <div class="section visible">
-      <div class="section-header">
-        <div class="section-icon icon-red">⚔️</div>
-        <h2>Кто такие «CARRY»?</h2>
-      </div>
-      <p><strong>Carry</strong> — герои, которые «принесут» команде победу. Их потенциал зависит от собранных предметов. В начале они слабы и нуждаются в защите, но позднее становятся могущественны.</p>
-      <img class="img-full" src="https://images.steamusercontent.com/ugc/490148340907100248/5EA46E257D663165C9EA6EBB8DC0893C1BE95323/" alt="Carry role" loading="lazy" onerror="this.style.display='none'">
+      <div class="section-header"><div class="section-icon icon-r">⚔️</div><h2>Кто такие «CARRY»?</h2></div>
+      <p><strong>Carry</strong> — герои, которые приносят победу. Зависят от предметов. В начале слабы, в конце — могущественны.</p>
       <div class="highlight-box"><p style="margin:0;">🎥 <a href="https://youtube.com/watch?v=u_I7p9Nycu0" target="_blank" style="color:var(--accent)">YouTube: Основы игры за керри</a></p></div>
     </div>
-
     <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-gold">🏆</div>
-        <h2>Semi-Carry и Hard Carry</h2>
-      </div>
-      <p><strong>Hard-Carry</strong> — очень сильны в поздней игре. Способны в одиночку расправиться с несколькими противниками при хорошем уровне и артефактах.</p>
+      <div class="section-header"><div class="section-icon icon-y">🏆</div><h2>Semi-Carry и Hard Carry</h2></div>
+      <p><strong>Hard-Carry</strong> — сильны в поздней игре, способны убивать нескольких врагов с хорошими артефактами.</p>
     </div>
-
     <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-blue">📈</div>
-        <h2>Почему керри раскрываются в поздней игре?</h2>
-      </div>
-      <ul>
-        <li>Нужен фарм для хороших предметов</li>
-        <li>В основном имеют пассивные скиллы, требующие уровней</li>
-        <li>Отличный прирост статов за уровень</li>
-        <li>Приоритетная характеристика — ловкость: скорость атаки и броня</li>
-      </ul>
-      <img class="img-full" src="https://images.steamusercontent.com/ugc/490148340907119528/105C70740DBB46CFABAB0826AC743AB528EB6471/" alt="Late game" loading="lazy" onerror="this.style.display='none'">
+      <div class="section-header"><div class="section-icon icon-b">📈</div><h2>Поздняя игра</h2></div>
+      <ul><li>Нужен фарм для предметов</li><li>Пассивные скиллы требуют уровней</li><li>Приоритет — ловкость: скорость атаки и броня</li></ul>
     </div>
-
     <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-orange">🎯</div>
-        <h2>Как же играть за Carry?</h2>
-      </div>
-      <p>Начало и середину игры керри должен уделять фарму и обгонять по нему оппонента.</p>
-      <p><strong>Ластхит:</strong> идеальный фарм — 80+ крипов к 10 минуте. Хороший показатель — 4-5 крипов в минуту. В сложной ситуации — 2-3 и ни одной смерти.</p>
-      <p><strong>Как улучшить ластхит:</strong> привыкнуть к анимации атаки, тренироваться в одиночку, играть против ботов.</p>
+      <div class="section-header"><div class="section-icon icon-o">🎯</div><h2>Как играть за Carry</h2></div>
+      <p>80+ крипов к 10 минуте — идеал. 4-5/мин — хорошо. Тренируйте ластхит.</p>
     </div>
-
     <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-purple">📊</div>
-        <h2>Различия керри по характеристикам</h2>
-      </div>
-      <p><strong>Сила</strong> — танки, много ХП, хороши в ранней игре. Предметы: Armlet, Assault Cuirass, Heaven's Halberd.</p>
-      <p><strong>Ловкость</strong> — скорость атаки и броня. Хороши в поздней игре. Butterfly — must have.</p>
-      <p><strong>Интеллект</strong> — магические керри с мощными спеллами.</p>
+      <div class="section-header"><div class="section-icon icon-p">📊</div><h2>Характеристики</h2></div>
+      <p><strong>Сила</strong> — танки, ХП. <strong>Ловкость</strong> — скорость атаки. <strong>Интеллект</strong> — магия.</p>
     </div>
-
     <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-teal">🗺️</div>
-        <h2>Распределение по линиям</h2>
-      </div>
-      <p><strong>Лёгкая линия (Safe lane)</strong> — наиболее безопасна для керри. Саппорты делают отводы, крипы ближе к башне.</p>
-      <p><strong>Тяжёлая линия (Hard lane)</strong> — сложнее, но даёт больше опыта.</p>
-      <img class="img-full" src="https://images.steamusercontent.com/ugc/490148340907138894/8F27D4374C5B9521EA6EF145ADE9B3DE796A026E/" alt="Lanes" loading="lazy" onerror="this.style.display='none'">
+      <div class="section-header"><div class="section-icon icon-t">🗺️</div><h2>Линии</h2></div>
+      <p><strong>Safe lane</strong> — безопасно для керри. <strong>Hard lane</strong> — сложнее, больше опыта.</p>
     </div>
-
     <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-gold">🛒</div>
-        <h2>Стартовый закуп керри</h2>
-      </div>
-      <img class="img-full" src="https://images.steamusercontent.com/ugc/490148340907116643/B82B767206F9E95C28B65E94C2BEC07F3946BC44/" alt="Carry items" loading="lazy" onerror="this.style.display='none'">
-      <p>У всех керри практически одинаковый итембилд: Tango, Healing Salve, веточки. Различия — в зависимости от ситуации и ренжа/мили.</p>
+      <div class="section-header"><div class="section-icon icon-r">🎯</div><h2>Контр-пики</h2></div>
+      <div class="hero-list"><span class="hero-tag">AA</span><span class="hero-tag">Riki</span><span class="hero-tag">Ursa</span><span class="hero-tag">Slardar</span><span class="hero-tag">Silencer</span><span class="hero-tag">OD</span><span class="hero-tag">SB</span><span class="hero-tag">DP</span><span class="hero-tag">Troll</span><span class="hero-tag">NS</span><span class="hero-tag">Clinkz</span><span class="hero-tag">Omni</span><span class="hero-tag">Weaver</span><span class="hero-tag">TB</span><span class="hero-tag">Lycan</span><span class="hero-tag">Enigma</span></div>
     </div>
-
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-red">🎯</div>
-        <h2>Против кого не стоит брать</h2>
-      </div>
-      <div class="hero-list">
-        <span class="hero-tag">Ancient Apparition</span> <span class="hero-tag">Riki</span> <span class="hero-tag">Ursa</span>
-        <span class="hero-tag">Slardar</span> <span class="hero-tag">Silencer</span> <span class="hero-tag">OD</span>
-        <span class="hero-tag">Spirit Breaker</span> <span class="hero-tag">DP</span> <span class="hero-tag">Troll</span>
-        <span class="hero-tag">NS</span> <span class="hero-tag">Clinkz</span> <span class="hero-tag">Beastmaster</span>
-        <span class="hero-tag">Omni</span> <span class="hero-tag">Shadow Demon</span> <span class="hero-tag">Luna</span>
-        <span class="hero-tag">Leshrac</span> <span class="hero-tag">Centaur</span> <span class="hero-tag">Weaver</span>
-        <span class="hero-tag">Terrorblade</span> <span class="hero-tag">Lycan</span> <span class="hero-tag">Enigma</span>
-      </div>
-    </div>
-
   </div>
 
-  <!-- === FARM GUIDE === -->
+  <!-- === FARM === -->
   <div class="guide-content" id="guide-farm">
-
     <div class="section visible">
-      <div class="section-header">
-        <div class="section-icon icon-gold">💰</div>
-        <h2>О чем нужно знать до начала игры</h2>
-      </div>
-      <p>Многие игроки хотят научиться быстро фармить. Я расскажу и покажу, как этого достичь.</p>
-      <ul>
-        <li><strong>Не умирайте</strong> — теряете золото и время</li>
-        <li><strong>Научитесь ластхитить</strong> — это самое важное</li>
-        <li>Не фармите до потери пульса</li>
-      </ul>
-      <img class="img-full" src="https://images.steamusercontent.com/ugc/450672941785764437/FC3100ED98328A591E44A00528A00A06F7988764/" alt="Don't die" loading="lazy" onerror="this.style.display='none'">
+      <div class="section-header"><div class="section-icon icon-y">💰</div><h2>Основы фарма</h2></div>
+      <ul><li><strong>Не умирайте</strong> — теряете золото и время</li><li><strong>Ластхит</strong> — самое важное</li><li>Не фармите до потери пульса</li></ul>
     </div>
-
     <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-blue">📚</div>
-        <h2>Основы фарма</h2>
-      </div>
-      <p>Фарм имеет очень важное значение в Dota 2. Вот несколько советов, как накопить большое количество золота за малое время.</p>
+      <div class="section-header"><div class="section-icon icon-o">🎯</div><h2>Ластхит</h2></div>
+      <p>100 крипов за 10 минут в соло. Тренируйтесь против 5 ботов.</p>
     </div>
-
     <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-red">💀</div>
-        <h2>Не умирайте</h2>
-      </div>
-      <p>Умирая, вы теряете золото и время. Научитесь играть безопасно, держитесь ближе к башне, если чувствуете возможные ганки.</p>
+      <div class="section-header"><div class="section-icon icon-p">🏹</div><h2>Анимация атаки</h2></div>
+      <p>Drow, Clinkz — медленная анимация. Sniper — лучшая. Милишниками фармить легче.</p>
     </div>
-
     <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-orange">🎯</div>
-        <h2>Научитесь ластхитить</h2>
-      </div>
-      <p>Попробуйте убить 100 крипов за 10 минут в одиночной игре. Играйте против 5 ботов — они великолепно ластхитят и денаят. Если научились у ботов — сможете и против людей.</p>
-      <img class="img-full" src="https://images.steamusercontent.com/ugc/450672941785820734/807729EB21B7C5751C50BC5B0EC954A048E7A3CE/" alt="Last hit practice" loading="lazy" onerror="this.style.display='none'">
+      <div class="section-header"><div class="section-icon icon-g">🌲</div><h2>Фарм в лесу</h2></div>
+      <p>Enigma — даггер за 8 мин. ~268 золота/мин. Ставьте варды!</p>
     </div>
-
     <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-purple">🏹</div>
-        <h2>Изучите анимацию атаки героя</h2>
-      </div>
-      <p>У Drow Ranger и Clinkz анимация медленнее — начинайте атаку раньше. У Sniper — лучшая анимация в игре. За милишников обычно фармить легче, чем за дальников.</p>
-      <div class="img-grid">
-        <img src="https://images.steamusercontent.com/ugc/450672941786311789/DB993C1182FEE7554188B184F2F7A1F4BE809985/" alt="Drow" loading="lazy" onerror="this.style.display='none'">
-        <img src="https://images.steamusercontent.com/ugc/450672941786316679/FE0A78BF64FFBD6D4012461B4F0123D04AAAD6B9/" alt="Clinkz" loading="lazy" onerror="this.style.display='none'">
-        <img src="https://images.steamusercontent.com/ugc/450672941786340853/01EB25B6E8BC8D0A7683C77221B041F11B22C7BA/" alt="Sniper" loading="lazy" onerror="this.style.display='none'">
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-green">🌲</div>
-        <h2>Фармите в лесу</h2>
-      </div>
-      <p>Лесные крипы сильно помогают при фарме. Enigma может нафармить даггер за 8 минут. В среднем фарм в лесу приносит 268 золота в минуту. Не забывайте ставить варды — в лесу вас легко заганкать.</p>
-    </div>
-
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-gold">👑</div>
-        <h2>Доминируйте на линии</h2>
-      </div>
-      <p>Если доминируете на линии — враг будет меньше харасить вас. При убийстве героя вы получаете дополнительное золото.</p>
-    </div>
-
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-red">🚫</div>
-        <h2>Не тратьте деньги попусту</h2>
-      </div>
-      <p>ТП свиток стоит 135 золота (3-4 крипа). ТП имеет кулдаун 65 секунд — сделав ТП, вы не сможете помочь союзникам, если начнётся драка.</p>
-    </div>
-
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-blue">⚡</div>
-        <h2>Используйте скиллы с умом</h2>
-      </div>
-      <p>Не спамьте магиями при фарме, особенно на низких уровнях. Лучше сохранить ману, чтобы убить 2-3 крипов за раз.</p>
-    </div>
-
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-teal">🗺️</div>
-        <h2>Перемещайтесь по карте</h2>
-      </div>
-      <p>Оптимизация движений по карте очень важна. Ищите крипов сами — не ждите, пока они придут к вам.</p>
-      <img class="img-full" src="https://images.steamusercontent.com/ugc/450672941786783841/E2CBD31A911D9CFE8A0146143C351261C394D196/" alt="Map movement" loading="lazy" onerror="this.style.display='none'">
+      <div class="section-header"><div class="section-icon icon-b">⚡</div><h2>Советы</h2></div>
+      <p>Не тратьте ТП впустую (135 zł). Не спамьте магию. Ищите крипов сами.</p>
     </div>
   </div>
 
-  <!-- FunPay CTA -->
-  <div style="text-align:center; margin: 40px 0;">
+  <!-- === OPTIMIZATION === -->
+  <div class="guide-content" id="guide-optimization">
+    <div class="section visible">
+      <div class="section-header"><div class="section-icon icon-b">⚡</div><h2>Максимальная оптимизация Dota 2</h2></div>
+      <p>Полный гайд по оптимизации: параметры запуска, настройки Windows, утилиты и автоэкзек.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-icon icon-o">🚀</div><h2>Параметры запуска</h2></div>
+      <p>Зайдите в <strong>Свойства Dota 2</strong> в Steam → <strong>Параметры запуска</strong> и вставьте нужные команды:</p>
+      <ul class="cmd-list">
+        <li><span class="cmd-tag">-novid</span>Пропустить заставку Valve</li>
+        <li><span class="cmd-tag">+fps_max 120</span>Ограничить FPS (укажите своё число)</li>
+        <li><span class="cmd-tag">-prewarm</span>Предзагрузка данных (HDD)</li>
+        <li><span class="cmd-tag">+map_enable_portrait_worlds 0</span>Убрать эффекты в меню</li>
+        <li><span class="cmd-tag">-noaafonts</span>Отключить сглаживание шрифтов</li>
+        <li><span class="cmd-tag">-novr</span>Отключить VR</li>
+        <li><span class="cmd-tag">-nojoy</span>Отключить джойстик</li>
+        <li><span class="cmd-tag">-high</span>Высокий приоритет процесса</li>
+        <li><span class="cmd-tag">-nod3d9ex</span>Отключить расширения Aero</li>
+        <li><span class="cmd-tag">-noipx</span>Снизить нагрузку на ОЗУ</li>
+        <li><span class="cmd-tag">-threads 2/4</span>Количество ядер CPU</li>
+        <li><span class="cmd-tag">-dx9 / -dx11 / -vulkan / -gl</span>Выбор API</li>
+        <li><span class="cmd-tag">-32bit</span>32-битный клиент (меньше RAM)</li>
+        <li><span class="cmd-tag">-autoconfig</span>Сбросить настройки до стандарта</li>
+        <li><span class="cmd-tag">-fullscreen / -windowed / -noborder</span>Режим экрана</li>
+        <li><span class="cmd-tag">-map dota</span>Загружать карту при старте</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-icon icon-p">🔧</div><h2>Выбор API: Vulkan vs DirectX</h2></div>
+      <p><strong>Vulkan</strong> — для современных видеокарт (особенно AMD), многоядерных CPU. Лучше стабильность FPS.</p>
+      <p><strong>DirectX 11</strong> — для старого оборудования и некоторых NVIDIA. Стабильнее на Windows.</p>
+      <p>Рекомендация: протестируйте оба API в одинаковых условиях и выберите лучший.</p>
+      <p>Чтобы включить Vulkan: Свойства → Доп. контент → установить Vulkan, затем выбрать в настройках графики.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-icon icon-r">🖥️</div><h2>Оптимизация Windows</h2></div>
+      <h3>1. Чистка автозагрузки</h3>
+      <p>Уберите Razer Synapse, Logitech G Hub и прочие ненужные программы из автозагрузки.</p>
+      <h3>2. Visual C++ Redistributable</h3>
+      <p>Скачайте и установите с <a href="https://www.techpowerup.com/download/visual-c-redistributable-runtime-package-all-in-one/" target="_blank" style="color:var(--accent)">techpowerup.com</a> — запустите install_all.bat от админа.</p>
+      <h3>3. Игровой режим</h3>
+      <p>Параметры → Игры → Игровой режим → Вкл.</p>
+      <h3>4. План электропитания</h3>
+      <p><code>powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61</code> (админская CMD) → включить «Максимальная производительность».</p>
+      <h3>5. Отключение Game Bar</h3>
+      <p>Win 10: Параметры → Игры → Game Bar. Win 11: <code>Get-AppxPackage Microsoft.XboxGamingOverlay | Remove-AppxPackage</code></p>
+      <p>Также отключите аппаратное ускорение и оверлей в Discord.</p>
+      <h3>6. Драйвера</h3>
+      <p>Обновите драйвера видеокарты через GeForce Experience / AMD Radeon Software.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-icon icon-g">🎮</div><h2>Оптимизация Dota 2</h2></div>
+      <h3>Настройки графики</h3>
+      <p>Выставьте минимальные настройки. Можно включить FidelityFX для апскейлинга.</p>
+      <h3>Minify — программа для оптимизации</h3>
+      <p><strong>Безопасно, не банят.</strong> Открытый код на GitHub.</p>
+      <ol>
+        <li>Установите <strong>Dota Workshop Tools</strong> (Свойства → Доп. контент)</li>
+        <li>В параметры запуска добавьте <code>-language russian</code></li>
+        <li>Скачайте <a href="https://github.com/Egezenn/dota2-minify/releases" target="_blank" style="color:var(--accent)">Minify с GitHub</a></li>
+        <li>Запустите <strong>Minify.exe</strong> от админа, выберите галочки, нажмите Patch</li>
+        <li>Переместите файлы из <code>dota_minify</code> в <code>dota_russian</code></li>
+      </ol>
+      <p class="spoiler" style="margin-top:8px;"><strong>Важно:</strong> После обновления Dota 2 мод может сломаться — скачайте новую версию Minify и установите заново.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-icon icon-y">📄</div><h2>Autoexec.cfg</h2></div>
+      <p>Добавьте в параметры запуска: <code>+exec autoexec.cfg</code></p>
+      <p>Создайте файл <code>autoexec.cfg</code> в <code>...\dota 2 beta\game\dota\cfg\</code> и вставьте:</p>
+      <pre>dota_portrait_animate 0
+r_deferred_additive_pass 0
+r_ssao 0
+r_dota_normal_maps 0
+r_grass_quality 0
+dota_cheap_water 1
+r_dashboard_render_quality 0
+dota_ambient_creatures 0
+dota_ambient_cloth 0
+r_dota_fxaa 1
+r_texturefilteringquality 0
+cl_particle_fallback_base 4
+cl_globallight_shadow_mode 0
+panorama_allow_transitions 0
+csm_viewmodel_shadows 0
+dota_allow_clientside_particles 0
+dota_disable_particle_lights 1
+lb_shadow_texture_height_override 128
+lb_shadow_texture_width_override 128
+r_dota_spotlight_shadows_resolution 128
+r_character_decal_resolution 256
+r_dota_shadow_ambient_light 0
+dota_unit_fly_particle 0
+dota_building_destruction_effects 0
+r_dynamiclighting 0
+dota_disable_weather_particles 1
+r_dota_allow_desaturate_layers 0
+r_dota_color_correction 0
+r_dota_render_2d_skybox 0
+r_depth_of_field 0
+map_enable_portrait_worlds 0</pre>
+      <p>Не забудьте сменить расширение с .txt на .cfg.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><div class="section-icon icon-b">📦</div><h2>Оптимизация Steam</h2></div>
+      <p>Отключите в настройках Steam всё лишнее: загрузки во время игры, анимации, оверлей, автоматические обновления.</p>
+      <h3>Максимальная оптимизация Steam (.bat)</h3>
+      <p>Создайте файл <code>steam_opt.bat</code> с содержимым:</p>
+      <pre>taskkill /f /im steam.exe >nul 2>&1
+rd /s /q "%localappdata%\Steam\htmlcache"
+rd /s /q "%localappdata%\Steam\shaders"
+rd /s /q "%localappdata%\Steam\cache"
+
+start "" "C:\Program Files (x86)\Steam\steam.exe" ^
+  -noverifyfiles ^
+  -quicklogin ^
+  -no-browser ^
+  -nofriendsui ^
+  -skipstreamingdrivers ^
+  -cef-single-process ^
+  -cef-disable-gpu ^
+  -cef-disable-gpu-compositing ^
+  -cef-disable-breakpad ^
+  -cef-force-occlusion ^
+  -no-dwrite ^
+  -vrdisable ^
+  -single_core ^
+  -nocrashdialog</pre>
+      <p>Измените путь к Steam.exe под вашу систему. Вместо дефолтных 10 процессов — будет всего 1.</p>
+    </div>
+
+    <div class="section" style="text-align:center; border-color:var(--accent);">
+      <p style="color:var(--text); max-width:500px;margin:0 auto;">Спасибо за внимание! Если гайд был полезен — не забудьте поставить лайк ❤️</p>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin: 36px 0;">
     <a href="https://funpay.com/users/17178819/" target="_blank" class="cta-button">
-      💎 Перейти к автору на FunPay
-      <span class="cta-arrow">→</span>
+      💎 Перейти к автору на FunPay <span class="cta-arrow">→</span>
     </a>
   </div>
-
-  <footer></footer>
 </div>
 
 <script>
-  // Like system (localStorage)
-  (function() {
-    const key = 'dota_guide_likes';
-    let likes = parseInt(localStorage.getItem(key)) || 164;
-    const countEl = document.getElementById('likeCount');
-    const iconEl = document.getElementById('likeIcon');
-    const btn = document.getElementById('likeBtn');
-    const likedKey = 'dota_guide_liked';
-    let liked = localStorage.getItem(likedKey) === 'true';
-    if (liked) { btn.classList.add('liked'); iconEl.textContent = '❤️'; }
-    countEl.textContent = likes;
-  })();
-  function toggleLike() {
-    const key = 'dota_guide_likes';
-    const likedKey = 'dota_guide_liked';
-    let likes = parseInt(localStorage.getItem(key)) || 164;
-    const countEl = document.getElementById('likeCount');
-    const iconEl = document.getElementById('likeIcon');
-    const btn = document.getElementById('likeBtn');
-    let liked = localStorage.getItem(likedKey) === 'true';
-    if (liked) {
-      likes--;
-      btn.classList.remove('liked');
-      iconEl.textContent = '🤍';
-      localStorage.setItem(likedKey, 'false');
-    } else {
-      likes++;
-      btn.classList.add('liked');
-      iconEl.textContent = '❤️';
-      localStorage.setItem(likedKey, 'true');
-    }
-    localStorage.setItem(key, likes);
-    countEl.textContent = likes;
-  }
+  // Like system
+  (function(){const k='dota_guide_likes';let l=parseInt(localStorage.getItem(k))||164;document.getElementById('likeCount').textContent=l;const lk='dota_guide_liked';if(localStorage.getItem(lk)==='true'){document.getElementById('likeBtn').classList.add('liked');document.getElementById('likeIcon').textContent='❤️'}})()
+  function toggleLike(){const k='dota_guide_likes',lk='dota_guide_liked';let l=parseInt(localStorage.getItem(k))||164;const c=document.getElementById('likeCount'),i=document.getElementById('likeIcon'),b=document.getElementById('likeBtn');if(localStorage.getItem(lk)==='true'){l--;b.classList.remove('liked');i.textContent='🤍';localStorage.setItem(lk,'false')}else{l++;b.classList.add('liked');i.textContent='❤️';localStorage.setItem(lk,'true')}localStorage.setItem(k,l);c.textContent=l}
 
-  // Tabs
-  document.querySelectorAll('.guide-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      const guide = tab.dataset.guide;
-      document.querySelectorAll('.guide-tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.guide-content').forEach(c => c.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById('guide-' + guide).classList.add('active');
-      document.querySelectorAll('.section').forEach(s => { if (s.offsetParent !== null) s.classList.add('visible'); });
+  // Tab switching
+  document.querySelectorAll('.nav-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const guide = card.dataset.guide;
+      document.querySelectorAll('.nav-card').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.guide-content').forEach(g => g.classList.remove('active'));
+      card.classList.add('active');
+      const content = document.getElementById('guide-' + guide);
+      content.classList.add('active');
+      content.querySelectorAll('.section').forEach(s => { setTimeout(() => s.classList.add('visible'), 50); });
     });
   });
 
-  // Scroll animations
+  // Scroll animation
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: .1 });
   document.querySelectorAll('.section').forEach(s => observer.observe(s));
-
-  // Nav hide/show
-  const navbar = document.getElementById('navbar');
-  let lastScroll = 0;
-  window.addEventListener('scroll', () => {
-    const current = window.scrollY;
-    if (current > lastScroll && current > 100) navbar.classList.add('hidden');
-    else navbar.classList.remove('hidden');
-    lastScroll = current;
-  });
 </script>
 </body>
 </html>
